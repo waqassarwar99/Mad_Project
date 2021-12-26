@@ -1,20 +1,55 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+// import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Icon } from "react-native-elements";
+
+
+import HomeScreen from "./screens/HomeScreen";
+import AddContract from "./screens/AddContract";
+import ViewContract from "./screens/ViewContract";
+import UpdateContract from "./screens/UpdateContract";
+import Chat from "./screens/Chat";
+
+const Stack = createStackNavigator();
+
+// const globalScreenOptions ={
+//   headerStyle: {backgroundColor: "#2c6bed"},
+//   headerTitleStyle: {color: "white"},
+//   headerTintColor: "white"
+// };
+
+
+const globalScreenOptions = {
+  headerStyle: {backgroundColor: "#2c6bed"},
+  headerTitleStyle: {color: "white"},
+  headerTintColor: "white",
+}
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={globalScreenOptions}>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="AddContract" component={AddContract} />
+        <Stack.Screen name="ViewContract" component={ViewContract} />
+        <Stack.Screen name="UpdateContract" component={UpdateContract} />
+        <Stack.Screen name="Chat" component={Chat} />
+        
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
