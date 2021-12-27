@@ -5,16 +5,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   Touchable,
-  TextInput
+  TextInput,
 } from "react-native";
 import { useEffect } from "react";
 import db from "../firebase";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { set } from "react-native-reanimated";
 import AddContract from "./AddContract";
 
 const ViewContract = () => {
-  const [contract, setContract] =React.useState([])
+  const [contract, setContract] = React.useState([]);
   // const getData = () => {
   //   getDocs(collection(db, "contracts"))
   //     .then((snapshot) => {
@@ -31,7 +30,6 @@ const ViewContract = () => {
   //     });
   // };
 
-
   // useEffect(() => {
   //   const unsubscribe = onSnapshot(collection(db, "contracts"), (snapshot) => {
   //     setContract(
@@ -44,21 +42,41 @@ const ViewContract = () => {
   //   return unsubscribe;
   // }, []);
 
-
+  useEffect(() => {
+    const unsubscribe = async () => {
+      const data = await getDocs(collection(db, "contracts"));
+      setContract(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    unsubscribe();
+  }, []);
 
   const delCont = () => {
-    doc(db,"contracts", )
-  } 
+    doc(db, "contracts");
+  };
   return (
     <View>
       <View>
-        <Text style={{fontWeight: "bold", fontSize: 25}}> View Contracts</Text>
+        <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+          {" "}
+          View Contracts
+        </Text>
       </View>
       <Text></Text>
-      <TouchableOpacity onPress={getData}>
-        <Text>view</Text>
-      </TouchableOpacity>
-      <Text>  </Text>
+     
+      <Text>
+        {" "}
+        {contract.map((cont) => {
+          return(
+            <View>
+              <Text> Name: {cont.name} </Text>
+              <Text> Amount: {cont.amount} </Text>
+              <Text> type: {cont.type} </Text>
+              <Text> date: {cont.date} </Text>
+            </View>
+            )
+          }
+        )}{" "}
+      </Text>
       <TextInput></TextInput>
     </View>
   );
