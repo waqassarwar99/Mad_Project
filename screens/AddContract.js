@@ -9,29 +9,33 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-elements";
-// import * as firebase from 'firebase';
-// import { initializeApp } from "firebase/app";
+import { collection, addDoc } from "firebase/firestore"; 
+import db from "../firebase";
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyA7qLvHbQ5Nk0-967Wzc-glrM0OQDp_vME",
-//   authDomain: "madproject-98dac.firebaseapp.com",
-//   projectId: "madproject-98dac",
-//   storageBucket: "madproject-98dac.appspot.com",
-//   messagingSenderId: "823943753173",
-//   appId: "1:823943753173:web:30d6a320d798d4a673615c",
-// };
-
-// // Initialize Firebase
-// const app = initializeApp(firebaseConfig);
 
 // const FIREBASE_API_ENDPOINT =
 //   "https://madproject-98dac-default-rtdb.firebaseio.com/";
 
 const AddContract = () => {
-  const [name, setName] = React.useState("");
-  const [type, setType] = React.useState("");
-  const [date, setDate] = React.useState("");
-  const [amount, setAmount] = React.useState("");
+  const [contractName, setContractName] = React.useState("");
+  const [contractType, setType] = React.useState("");
+  const [contractDate, setDate] = React.useState("");
+  const [contractAmount, setAmount] = React.useState("");
+
+  const postData = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "contracts"), {
+        name: contractName,
+        type: contractType,
+        date: contractDate,
+        amount: contractAmount
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+
+  }
 
   //   const postData = () => {
   //     var requestOptions = {
@@ -49,40 +53,53 @@ const AddContract = () => {
   //       .catch((error) => console.log("error", error));
   //   };
   return (
-    <View>
+    <View style={styles.container}>
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
         }}
       >
         <Icon name="plus" size={25} />
         <Text style={{ fontSize: 25, fontWeight: "bold" }}> Add Contract</Text>
       </View>
-      <Text> Contract Name </Text>
+      <Text style={{ fontSize: 20 }}> Contract Name </Text>
       <TextInput
         placeholder="Enter Contract Name"
-        onChangeText={(a) => setName(name)}
+        onChangeText={(a) => setContractName(contractName)}
+        style={{ border: "1px solid black" }}
       />
-      <Text> Contract Type </Text>
+      <Text style={{ fontSize: 20 }}> Contract Type </Text>
       <TextInput
         placeholder="Enter Contract Type"
-        onChangeText={(a) => setType(type)}
+        onChangeText={(a) => setType(contractType)}
+        style={{ border: "1px solid black" }}
       />
-      <Text> Contract Date </Text>
+      <Text style={{ fontSize: 20 }}> Contract Date </Text>
       <TextInput
         placeholder="Enter Contract Date"
-        onChangeText={(a) => setDate(date)}
+        onChangeText={(a) => setDate(contractDate)}
+        style={{ border: "1px solid black" }}
       />
-      <Text> Contract Amount </Text>
+      <Text style={{ fontSize: 20 }}> Contract Amount </Text>
       <TextInput
         placeholder="Enter Contract Amount"
-        onChangeText={(a) => setAmount(amount)}
+        onChangeText={(a) => setAmount(contractAmount)}
+        style={{ border: "1px solid black" }}
       />
-      <Button title="Add" />
+      <Button title="ADD" buttonStyle={{marginTop: 20, borderRadius: 10, width: 50}} onPress={() => postData}/>
     </View>
   );
 };
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    
+  },
+
+});
 
 export default AddContract;

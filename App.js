@@ -6,13 +6,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
-
+import { db } from "./firebase";
 
 import HomeScreen from "./screens/HomeScreen";
 import AddContract from "./screens/AddContract";
 import ViewContract from "./screens/ViewContract";
 import UpdateContract from "./screens/UpdateContract";
 import Chat from "./screens/Chat";
+import AddChat from "./screens/AddChat";
 
 const Stack = createStackNavigator();
 
@@ -39,6 +40,7 @@ export default function App() {
         <Stack.Screen name="ViewContract" component={ViewContract} />
         <Stack.Screen name="UpdateContract" component={UpdateContract} />
         <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="AddChat" component={AddChat} />
         
       </Stack.Navigator>
     </NavigationContainer>
