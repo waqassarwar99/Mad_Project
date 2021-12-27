@@ -6,6 +6,7 @@ import { useLayoutEffect } from "react";
 import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 import { collection, addDoc } from "firebase/firestore"; 
 import { getDatabase, ref, onValue, set } from "firebase/database";
+// import * as firebase from 'firebase';
 import db from "../firebase";
 
 const AddChat = ({ navigation }) => {
@@ -46,10 +47,3 @@ const AddChat = ({ navigation }) => {
 
 export default AddChat;
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "white",
-        padding: 30,
-        height: "100%"
-    },
-});

@@ -14,22 +14,15 @@ import ViewContract from "./screens/ViewContract";
 import UpdateContract from "./screens/UpdateContract";
 import Chat from "./screens/Chat";
 import AddChat from "./screens/AddChat";
+import ChatScreen from "./screens/ChatScreen";
 
 const Stack = createStackNavigator();
 
-// const globalScreenOptions ={
-//   headerStyle: {backgroundColor: "#2c6bed"},
-//   headerTitleStyle: {color: "white"},
-//   headerTintColor: "white"
-// };
-
-
 const globalScreenOptions = {
-  headerStyle: {backgroundColor: "#2c6bed"},
-  headerTitleStyle: {color: "white"},
+  headerStyle: { backgroundColor: "#2c6bed" },
+  headerTitleStyle: { color: "white" },
   headerTintColor: "white",
-}
-
+};
 
 export default function App() {
   return (
@@ -41,7 +34,7 @@ export default function App() {
         <Stack.Screen name="UpdateContract" component={UpdateContract} />
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="AddChat" component={AddChat} />
-        
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

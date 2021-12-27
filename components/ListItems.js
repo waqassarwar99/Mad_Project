@@ -4,7 +4,7 @@ import { ListItem, Avatar } from "react-native-elements";
 
 const ListItems = ({id, chatName, enterChat}) => {
   return (
-    <ListItem key={id} buttomDivider>
+    <ListItem onPress={() => enterChat(id, chatName)} key={id} buttomDivider>
       <Avatar
         rounded
         source={{

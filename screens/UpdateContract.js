@@ -27,24 +27,15 @@ const UpdateContract = () => {
         </Text>
       </View>
       <Text style={{ fontSize: 20 }}> Contract Name </Text>
-      <TextInput
-        placeholder="Enter Contract Name"
-        style={{ border: "1px solid black" }}
-      />
+      <TextInput placeholder="Enter Contract Name" style={{ borderWidth: 1 }} />
       <Text style={{ fontSize: 20 }}> Contract Type </Text>
-      <TextInput
-        placeholder="Enter Contract Type"
-        style={{ border: "1px solid black" }}
-      />
+      <TextInput placeholder="Enter Contract Type" style={{ borderWidth: 1 }} />
       <Text style={{ fontSize: 20 }}> Contract Date </Text>
-      <TextInput
-        placeholder="Enter Contract Date"
-        style={{ border: "1px solid black" }}
-      />
+      <TextInput placeholder="Enter Contract Date" style={{ borderWidth: 1 }} />
       <Text style={{ fontSize: 20 }}> Contract Amount </Text>
       <TextInput
         placeholder="Enter Contract Amount"
-        style={{ border: "1px solid black" }}
+        style={{ borderWidth: 1 }}
       />
       <Button title="Submit" />
     </View>

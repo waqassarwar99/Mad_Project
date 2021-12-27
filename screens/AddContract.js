@@ -8,15 +8,11 @@ import {
   TextInput,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Button } from "react-native-elements";
-import { collection, addDoc } from "firebase/firestore"; 
+import { Button, Input } from "react-native-elements";
+import { collection, addDoc } from "firebase/firestore";
 import db from "../firebase";
 
-
-// const FIREBASE_API_ENDPOINT =
-//   "https://madproject-98dac-default-rtdb.firebaseio.com/";
-
-const AddContract = () => {
+const AddContract = ({ navigation }) => {
   const [contractName, setContractName] = React.useState("");
   const [contractType, setType] = React.useState("");
   const [contractDate, setDate] = React.useState("");
@@ -25,33 +21,19 @@ const AddContract = () => {
   const postData = async () => {
     try {
       const docRef = await addDoc(collection(db, "contracts"), {
+        amount: contractAmount,
+        date: contractDate,
         name: contractName,
         type: contractType,
-        date: contractDate,
-        amount: contractAmount
+      }).then(() => {
+        navigation.goBack();
       });
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Contract added: ");
     } catch (e) {
       console.error("Error adding document: ", e);
     }
+  };
 
-  }
-
-  //   const postData = () => {
-  //     var requestOptions = {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         contractName: name,
-  //         contractType: type,
-  //         contractDate: date,
-  //         contractAmount: amount,
-  //       }),
-  //     };
-  //     fetch(`${FIREBASE_API_ENDPOINT}/tasks.json`, requestOptions)
-  //       .then((response) => response.json())
-  //       .then((result) => console.log(result))
-  //       .catch((error) => console.log("error", error));
-  //   };
   return (
     <View style={styles.container}>
       <View
@@ -62,44 +44,55 @@ const AddContract = () => {
         <Icon name="plus" size={25} />
         <Text style={{ fontSize: 25, fontWeight: "bold" }}> Add Contract</Text>
       </View>
-      <Text style={{ fontSize: 20 }}> Contract Name </Text>
-      <TextInput
-        placeholder="Enter Contract Name"
-        onChangeText={(a) => setContractName(contractName)}
-        style={{ border: "1px solid black" }}
-      />
-      <Text style={{ fontSize: 20 }}> Contract Type </Text>
-      <TextInput
-        placeholder="Enter Contract Type"
-        onChangeText={(a) => setType(contractType)}
-        style={{ border: "1px solid black" }}
-      />
-      <Text style={{ fontSize: 20 }}> Contract Date </Text>
-      <TextInput
-        placeholder="Enter Contract Date"
-        onChangeText={(a) => setDate(contractDate)}
-        style={{ border: "1px solid black" }}
-      />
-      <Text style={{ fontSize: 20 }}> Contract Amount </Text>
-      <TextInput
-        placeholder="Enter Contract Amount"
-        onChangeText={(a) => setAmount(contractAmount)}
-        style={{ border: "1px solid black" }}
-      />
-      <Button title="ADD" buttonStyle={{marginTop: 20, borderRadius: 10, width: 50}} onPress={() => postData}/>
+      <View style={{flex: 1, width: "100%"}}>
+        <Text style={{ fontSize: 20 }}> Contract Name </Text>
+        <Input
+          placeholder="Enter Contract Name"
+          value={contractName}
+          onChangeText={(name) => setContractName(name)}
+          onSubmitEditing={postData}
+          style={{ borderWidth: 1 }}
+        />
+        <Text style={{ fontSize: 20 }}> Contract Type </Text>
+        <Input
+          placeholder="Enter Contract Type"
+          value={contractType}
+          onChangeText={(type) => setType(type)}
+          onSubmitEditing={postData}
+          style={{ borderWidth: 1 }}
+        />
+        <Text style={{ fontSize: 20 }}> Contract Date </Text>
+        <Input
+          placeholder="Enter Contract Date"
+          value={contractDate}
+          onChangeText={(date) => setDate(date)}
+          onSubmitEditing={postData}
+          style={{ borderWidth: 1 }}
+        />
+        <Text style={{ fontSize: 20 }}> Contract Amount </Text>
+        <Input
+          placeholder="Enter Contract Amount"
+          value={contractAmount}
+          onChangeText={(amount) => setAmount(amount)}
+          onSubmitEditing={postData}
+          style={{ borderWidth: 1 }}
+        />
+        <Button
+          title="ADD"
+          buttonStyle={{ marginTop: 20, borderRadius: 10, width: 50 }}
+          onPress={postData}
+        />
+      </View>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    
   },
-
 });
 
 export default AddContract;
