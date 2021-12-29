@@ -15,8 +15,11 @@ import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Icon } from "react-native-elements";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc } from "firebase/firestore";
+// import * as firebase from 'firebase'
 import db from "../firebase";
+import Chat from "./Chat";
+
 const ChatScreen = ({ navigation, route }) => {
   const [input, setInput] = React.useState("");
 
@@ -48,36 +51,33 @@ const ChatScreen = ({ navigation, route }) => {
     });
   }, []);
 
-  const sendMessage = () => {};
-      Keyboard.dismiss();
-      // db.collection('chats').doc(route.params.id)
+  const sendMessage = () => {
+    db.collection("chats").doc(route.params.id).collection("messages").add({
+      message: input,
+    });
+    setInput("");
+  };
+
   return (
     <View>
       <View style={{ flex: 1, backgroundColor: "white" }}>
-        <StatusBar style="light" />
-        <KeyboardAvoidingView
-          style={styles.container}
-          // keyboardVerticalOffset={90}
-        >
-          {/* React Fragment */}
-          <TouchableWithoutFeedback>
-            <>
-              <ScrollView>{/* ALL the Chat goes here */}</ScrollView>
+        {/* React Fragment */}
+        <>
+          <ScrollView>{/* ALL the Chat goes here */}</ScrollView>
 
-              <View style={styles.footer}>
-                <TextInput
-                  placeholder="Signal Chat"
-                  style={styles.textInput}
-                  value={input}
-                  onChangeText={(text) => setInput(text)}
-                />
-                <TouchableOpacity onPress={sendMessage}>
-                  <Icon name="paper-plane" type="font-awesome" />
-                </TouchableOpacity>
-              </View>
-            </>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+          <View>
+            <TextInput
+              placeholder="Signal Chat"
+              // style={styles.textInput}
+              value={input}
+              onChangeText={(text) => setInput(text)}
+              onSubmitEditing={sendMessage}
+            />
+            <TouchableOpacity onPress={sendMessage}>
+              <Icon name="paper-plane" type="font-awesome" />
+            </TouchableOpacity>
+          </View>
+        </>
       </View>
     </View>
   );
@@ -86,23 +86,23 @@ const ChatScreen = ({ navigation, route }) => {
 export default ChatScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  footer: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-    padding: 15,
-  },
-  textInput: {
-    bottom: 0,
-    height: 40,
-    flex: 1,
-    marginRight: 15,
-    backgroundColor: "#ECECEC",
-    padding: 10,
-    color: "grey",
-    borderRadius: 30,
-  },
+  // container: {
+  //   flex: 1,
+  // },
+  // footer: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   width: "100%",
+  //   padding: 15,
+  // },
+  // textInput: {
+  //   bottom: 0,
+  //   height: 40,
+  //   flex: 1,
+  //   marginRight: 15,
+  //   backgroundColor: "#ECECEC",
+  //   padding: 10,
+  //   color: "grey",
+  //   borderRadius: 30,
+  // },
 });

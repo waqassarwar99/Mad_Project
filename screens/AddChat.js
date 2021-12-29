@@ -4,7 +4,7 @@ import { Button, Input } from "react-native-elements";
 import { Icon } from "react-native-vector-icons/FontAwesome";
 import { useLayoutEffect } from "react";
 import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 import { getDatabase, ref, onValue, set } from "firebase/database";
 // import * as firebase from 'firebase';
 import db from "../firebase";
@@ -18,21 +18,30 @@ const AddChat = ({ navigation }) => {
     });
   }, [navigation]);
 
-  const createChat = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "chats"), {
-       chatName: input
-      }).then(() => {
-          navigation.goBack();
+  // const createChat = async () => {
+  // try {
+  //   const docRef = await addDoc(collection(db, "chats"), {
+  //    chatName: input
+  //   }).then(() => {
+  //       navigation.goBack();
+  //   })
+  //   console.log("Chat added with id: ");
+  // } catch (e) {
+  //   console.error("Error adding document: ", e);
+  // }
+  // }
+
+  const createChat = () => {
+    db.collection("chats")
+      .add({
+        chatName: input,
       })
-      console.log("Chat added with id: ");
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
+      .then(() => navigation.goBack())
+      .catch((err) => console.log(err));
+  };
 
   return (
-    <View style={styles.container}>
+    <View>
       <Input
         placeholder="Enter a chat name"
         value={input}
@@ -46,4 +55,3 @@ const AddChat = ({ navigation }) => {
 };
 
 export default AddChat;
-
