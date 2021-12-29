@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-elements";
-import { collection, updateDoc, doc } from "firebase/firestore";
 import db from "../firebase";
 
 const UpdateContract = ({ navigation, route }) => {

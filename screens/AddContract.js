@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button, Input } from "react-native-elements";
-import { collection, addDoc } from "firebase/firestore";
 import db from "../firebase";
 
 const AddContract = ({ navigation }) => {
@@ -22,22 +21,6 @@ const AddContract = ({ navigation }) => {
   const [contractType, setType] = React.useState("");
   const [contractDate, setDate] = React.useState("");
   const [contractAmount, setAmount] = React.useState("");
-
-  // const postData = async () => {
-  //   try {
-  //     const docRef = await addDoc(collection(db, "contracts"), {
-  //       amount: contractAmount,
-  //       date: contractDate,
-  //       name: contractName,
-  //       type: contractType,
-  //     }).then(() => {
-  //       navigation.goBack();
-  //     });
-  //     console.log("Contract added: ");
-  //   } catch (e) {
-  //     console.error("Error adding document: ", e);
-  //   }
-  // };
 
   const postData = () => {
     db.collection("contracts")

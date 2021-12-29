@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { useEffect } from "react";
 import db from "../firebase";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import AddContract from "./AddContract";
 import UpdateContract from "./UpdateContract";
 import { DataTable } from "react-native-paper";
@@ -19,15 +18,6 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const ViewContract = ({ navigation }) => {
   const [contract, setContract] = React.useState([]);
-
-  // useEffect(() => {
-  //   const unsubscribe = async () => {
-  //     const data = await getDocs(collection(db, "contracts"));
-  //     setContract(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //     console.log(contract);
-  //   };
-  //   unsubscribe();
-  // }, []);
 
   React.useEffect(() => {
     db.collection("contracts").onSnapshot({
