@@ -1,10 +1,21 @@
 // component that is used for chat home screen
 
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
+import { Icon } from "react-native-elements";
+import { firebase } from "@firebase/app";
+import db from "../firebase";
 
 const ListItems = ({ id, chatName, enterChat }) => {
+  const deleteChat = (id) => {
+    db.collection("chats")
+      .doc(id)
+      .delete()
+  };
+
+  
+
   return (
     <ListItem onPress={() => enterChat(id, chatName)} key={id} buttomDivider>
       <Avatar
@@ -18,6 +29,11 @@ const ListItems = ({ id, chatName, enterChat }) => {
         <ListItem.Title style={{ fontWeight: "800" }}>
           {chatName}
         </ListItem.Title>
+        <ListItem.Subtitle style={{ alignSelf: "flex-end" }}>
+          <TouchableOpacity onPress={() => deleteChat(id)}>
+            <Icon name="trash" type="font-awesome" color="red" />
+          </TouchableOpacity>
+        </ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>
   );

@@ -75,6 +75,8 @@ const Chat = ({ navigation }) => {
     });
   };
 
+  
+
   return (
     <View>
       <ScrollView style={StyleSheet.container}>
