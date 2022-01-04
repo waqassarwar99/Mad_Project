@@ -37,8 +37,9 @@ const Chat = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       title: "Waqas Sarwar",
-      headerStyle: { backgroundColor: "#8A2BE2" },
+      headerStyle: { backgroundColor: "#778899" },
       headerTitleStyle: { color: "black" },
+      headerTitleAlign: "left",
       headerTintColor: "black", // If there are any icons then the color will be black
       headerLeft: () => (
         <View style={{ marginLeft: 20 }}>
@@ -57,7 +58,7 @@ const Chat = ({ navigation }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             width: 80,
-            marginRight: 20,
+            marginRight: -30,
           }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("AddChat")}>

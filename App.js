@@ -3,7 +3,6 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-// import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Icon } from "react-native-elements";
 import { db } from "./firebase";
 
@@ -14,26 +13,50 @@ import UpdateContract from "./screens/UpdateContract";
 import Chat from "./screens/Chat";
 import AddChat from "./screens/AddChat";
 import ChatScreen from "./screens/ChatScreen";
+import ContractDetail from "./screens/ContractDetail";
 
 const Stack = createStackNavigator();
 
 const globalScreenOptions = {
-  headerStyle: { backgroundColor: "#2c6bed" },
+  headerStyle: { backgroundColor: "#778899" },
   headerTitleStyle: { color: "white" },
   headerTintColor: "white",
+  headerTitleAlign: "center",
+
 };
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={globalScreenOptions}>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="AddContract" component={AddContract} />
-        <Stack.Screen name="ViewContract" component={ViewContract} />
-        <Stack.Screen name="UpdateContract" component={UpdateContract} />
+        <Stack.Screen
+          name="Home"
+          options={{ title: "Home" }}
+          component={HomeScreen}
+        />
+        <Stack.Screen
+          name="AddContract"
+          options={{ title: "ADD CONTRACT" }}
+          component={AddContract}
+        />
+        <Stack.Screen
+          name="ViewContract"
+          component={ViewContract}
+          options={{ title: "View" }}
+        />
+        <Stack.Screen
+          name="UpdateContract"
+          component={UpdateContract}
+          options={{ title: "Update" }}
+        />
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="AddChat" component={AddChat} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
+        <Stack.Screen
+          name="ContractDetail"
+          component={ContractDetail}
+          options={{ title: "Details" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

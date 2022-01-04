@@ -17,6 +17,7 @@ const UpdateContract = ({ navigation, route }) => {
   const [date, setDate] = React.useState("");
   const [amount, setAmount] = React.useState("");
   const [contId, setContId] = React.useState(route.params.id);
+  const [contract, setContract] = React.useState([]);
 
   const updateCont = () => {
     return db
@@ -30,6 +31,26 @@ const UpdateContract = ({ navigation, route }) => {
       })
       .then(() => navigation.navigate("ViewContract"));
   };
+  React.useEffect(() => {
+    db.collection("contracts").onSnapshot({
+      next: (querySnapshot) => {
+        const contract = querySnapshot.docs.map((docSnapshot) => ({
+          id: docSnapshot.id,
+          name: docSnapshot.data().name,
+          date: docSnapshot.data().date,
+          type: docSnapshot.data().type,
+          amount: docSnapshot.data().amount,
+        }));
+        var contractData = contract.filter((item) => item.id == contId);
+        setContract(contractData[0]);
+        setName(contractData[0].name);
+        setType(contractData[0].type);
+        setDate(contractData[0].date);
+        setAmount(contractData[0].amount);
+      },
+      error: (err) => console.log(err),
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -38,6 +59,7 @@ const UpdateContract = ({ navigation, route }) => {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          marginTop: 20,
         }}
       >
         <Icon name="edit" size={25} />
@@ -46,35 +68,55 @@ const UpdateContract = ({ navigation, route }) => {
           Update Contract
         </Text>
       </View>
-      <Text style={{ fontSize: 20 }}> Contract Name </Text>
-      <TextInput
-        placeholder="Enter Contract Name"
-        style={{ borderWidth: 1 }}
-        value={name}
-        onChangeText={(name) => setName(name)}
+      <View style={styles.detail}>
+        <Text style={{ fontSize: 20, fontWeight: "700" }}> Contract Name </Text>
+        <TextInput
+          placeholder="Enter Contract Name"
+          style={{ borderBottomWidth: 1, padding: 5 }}
+          value={name}
+          onChangeText={(name) => setName(name)}
+        />
+        <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20 }}>
+          {" "}
+          Contract Type{" "}
+        </Text>
+        <TextInput
+          placeholder="Enter Contract Type"
+          style={{ borderBottomWidth: 1, padding: 5 }}
+          value={contType}
+          onChangeText={(type) => setType(type)}
+        />
+        <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20 }}>
+          {" "}
+          Contract Date{" "}
+        </Text>
+        <TextInput
+          placeholder="Enter Contract Date"
+          style={{ borderBottomWidth: 1, padding: 5 }}
+          value={date}
+          onChangeText={(date) => setDate(date)}
+        />
+        <Text style={{ fontSize: 20, fontWeight: "700", marginTop: 20 }}>
+          {" "}
+          Contract Amount{" "}
+        </Text>
+        <TextInput
+          placeholder="Enter Contract Amount"
+          style={{ borderBottomWidth: 1, padding: 5 }}
+          value={amount}
+          onChangeText={(amount) => setAmount(amount)}
+        />
+      </View>
+      <Button
+        title="Update"
+        onPress={updateCont}
+        buttonStyle={{
+          borderRadius: 20,
+          width: 130,
+          padding: 15,
+          marginTop: 30,
+        }}
       />
-      <Text style={{ fontSize: 20 }}> Contract Type </Text>
-      <TextInput
-        placeholder="Enter Contract Type"
-        style={{ borderWidth: 1 }}
-        value={contType}
-        onChangeText={(type) => setType(type)}
-      />
-      <Text style={{ fontSize: 20 }}> Contract Date </Text>
-      <TextInput
-        placeholder="Enter Contract Date"
-        style={{ borderWidth: 1 }}
-        value={date}
-        onChangeText={(date) => setDate(date)}
-      />
-      <Text style={{ fontSize: 20 }}> Contract Amount </Text>
-      <TextInput
-        placeholder="Enter Contract Amount"
-        style={{ borderWidth: 1 }}
-        value={amount}
-        onChangeText={(amount) => setAmount(amount)}
-      />
-      <Button title="Submit" onPress={updateCont} />
     </View>
   );
 };
@@ -84,6 +126,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
+  },
+  detail: {
+    margin: 40,
+    marginBottom: 20,
+    justifyContent: "space-between",
+    backgroundColor: "#D3D3D3",
+    padding: 50,
+    borderRadius: 30,
   },
 });
 

@@ -8,13 +8,16 @@ import { firebase } from "@firebase/app";
 import db from "../firebase";
 
 const ListItems = ({ id, chatName, enterChat }) => {
-  const deleteChat = (id) => {
-    db.collection("chats")
-      .doc(id)
-      .delete()
-  };
+  // const deleteChat = (id) => {
+  //   var docRef = db.collection("chats").doc(id).collection("messages");
+  //   // docRef.delete();
+  // };
 
-  
+   const deleteChat = (id) => {
+     db.collection("chats")
+       .doc(id)
+       .delete()
+   };
 
   return (
     <ListItem onPress={() => enterChat(id, chatName)} key={id} buttomDivider>

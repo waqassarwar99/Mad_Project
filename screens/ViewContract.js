@@ -14,7 +14,6 @@ import AddContract from "./AddContract";
 import UpdateContract from "./UpdateContract";
 import { DataTable } from "react-native-paper";
 import { Icon } from "react-native-elements";
-import { NavigationContainer } from "@react-navigation/native";
 
 const ViewContract = ({ navigation }) => {
   const [contract, setContract] = React.useState([]);
@@ -35,13 +34,6 @@ const ViewContract = ({ navigation }) => {
     });
   }, []);
 
-  // const deleteCont = async (id) => {
-  //   const contDoc = doc(db, "contracts", id);
-  //   await deleteDoc(contDoc).then(() => {
-  //     navigation.goBack();
-  //   });
-  // };
-
   const deleteCont = (id) => {
     db.collection("contracts")
       .doc(id)
@@ -56,9 +48,21 @@ const ViewContract = ({ navigation }) => {
   };
   return (
     <View>
-      <View>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 20,
+          marginBottom: 20,
+        }}
+      >
         <Text style={{ fontWeight: "bold", fontSize: 25 }}>
-          {" "}
+          <Icon
+            name="eye"
+            type="font-awesome"
+            size={25}
+            style={{ marginRight: 5 }}
+          />
           View Contracts
         </Text>
       </View>
@@ -66,35 +70,42 @@ const ViewContract = ({ navigation }) => {
       <DataTable>
         <DataTable.Header>
           <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title numeric>Amount</DataTable.Title>
-          <DataTable.Title numeric>Type</DataTable.Title>
-          <DataTable.Title numeric>Date</DataTable.Title>
           <DataTable.Title numeric>Delete</DataTable.Title>
           <DataTable.Title numeric>Update</DataTable.Title>
         </DataTable.Header>
 
         {contract.map((cont, id) => {
           return (
-            <DataTable.Row key={id}>
-              <DataTable.Cell>{cont.name}</DataTable.Cell>
-              <DataTable.Cell numeric>{cont.amount}</DataTable.Cell>
-              <DataTable.Cell numeric>{cont.type}</DataTable.Cell>
-              <DataTable.Cell numeric>{cont.date}</DataTable.Cell>
-              <DataTable.Cell numeric>
-                <TouchableOpacity onPress={() => deleteCont(cont.id)}>
-                  <Icon name="trash" type="font-awesome" color="red" />
-                </TouchableOpacity>
-              </DataTable.Cell>
-              <DataTable.Cell numeric>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("UpdateContract", { id: cont.id })
-                  }
-                >
-                  <Icon name="edit" type="font-awesome" color="red" />
-                </TouchableOpacity>
-              </DataTable.Cell>
-            </DataTable.Row>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("ContractDetail", {
+                  data: {
+                    name: cont.name,
+                    type: cont.type,
+                    amount: cont.amount,
+                    date: cont.date,
+                  },
+                })
+              }
+            >
+              <DataTable.Row key={id} id={id}>
+                <DataTable.Cell>{cont.name}</DataTable.Cell>
+                <DataTable.Cell numeric>
+                  <TouchableOpacity onPress={() => deleteCont(cont.id)}>
+                    <Icon name="trash" type="font-awesome" color="red" />
+                  </TouchableOpacity>
+                </DataTable.Cell>
+                <DataTable.Cell numeric>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("UpdateContract", { id: cont.id })
+                    }
+                  >
+                    <Icon name="edit" type="font-awesome" color="red" />
+                  </TouchableOpacity>
+                </DataTable.Cell>
+              </DataTable.Row>
+            </TouchableOpacity>
           );
         })}
       </DataTable>

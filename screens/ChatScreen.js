@@ -43,13 +43,6 @@ const ChatScreen = ({ navigation, route }) => {
           </Text>
         </View>
       ),
-      headerRight: () => (
-        <View style={{ marginRight: 20 }}>
-          <TouchableOpacity>
-            <AntDesign name="camerao" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-      ),
     });
   }, []);
 
@@ -91,6 +84,8 @@ const ChatScreen = ({ navigation, route }) => {
       </ScrollView>
       <KeyboardAvoidingView
         behavior={Platform.OS === "android" ? "padding" : "height"}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={90}
       >
         <View style={styles.footer}>
           <TextInput
@@ -100,7 +95,7 @@ const ChatScreen = ({ navigation, route }) => {
             onChangeText={(text) => setInput(text)}
             onSubmitEditing={sendMessage}
           />
-          <TouchableOpacity onPress={sendMessage}>
+          <TouchableOpacity onPress={sendMessage} style={{ bottom: -240 }}>
             <Ionicons name="send" color="#2b68e6" size={24} />
           </TouchableOpacity>
         </View>
@@ -120,9 +115,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     padding: 15,
-    // bottom: -700,
   },
   textInput: {
+    bottom: -240,
     height: 40,
     flex: 1,
     marginRight: 15,
@@ -132,6 +127,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   receiver: {
+    bottom: 0,
     padding: 15,
     backgroundColor: "#ECECEC",
     alignSelf: "flex-end",
