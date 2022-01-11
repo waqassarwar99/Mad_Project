@@ -1,17 +1,6 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Touchable,
-  TextInput,
-  FlatList,
-} from "react-native";
-import { useEffect } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import db from "../firebase";
-import AddContract from "./AddContract";
-import UpdateContract from "./UpdateContract";
 import { DataTable } from "react-native-paper";
 import { Icon } from "react-native-elements";
 
@@ -39,12 +28,6 @@ const ViewContract = ({ navigation }) => {
       .doc(id)
       .delete()
       .then(() => navigation.goBack());
-  };
-
-  const updateCont = (id) => {
-    return db.collection("contracts").doc(id).update({
-      name: "Contract 2",
-    });
   };
   return (
     <View>

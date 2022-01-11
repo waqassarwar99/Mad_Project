@@ -1,5 +1,4 @@
 //screen for chatting between users.
-
 import React from "react";
 import { useLayoutEffect } from "react";
 import {
@@ -9,17 +8,13 @@ import {
   Text,
   TextInput,
   View,
-  SafeAreaView,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Keyboard,
   Platform,
 } from "react-native";
 import { Avatar } from "react-native-elements/dist/avatar/Avatar";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { Icon } from "react-native-elements";
+import { Ionicons } from "@expo/vector-icons";
 import * as firebase from "firebase";
-import firestore from "@react-native-firebase/firestore";
 import db from "../firebase";
 
 const ChatScreen = ({ navigation, route }) => {
@@ -34,12 +29,11 @@ const ChatScreen = ({ navigation, route }) => {
           <Avatar
             rounded
             source={{
-              uri: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+              uri: route.params.image,
             }}
           />
           <Text style={{ fontWeight: "bold", marginLeft: 10, color: "white" }}>
-            {" "}
-            {route.params.chatName}{" "}
+            {route.params.chatName}
           </Text>
         </View>
       ),
@@ -48,7 +42,7 @@ const ChatScreen = ({ navigation, route }) => {
 
   const sendMessage = () => {
     Keyboard.dismiss();
-    db.collection("chats").doc(route.params.id).collection("messages").add({
+    db.collection("Contchat").doc(route.params.id).collection("chatting").add({
       message: input,
       timestamp: firebase.default.firestore.FieldValue.serverTimestamp(),
     });
@@ -56,10 +50,10 @@ const ChatScreen = ({ navigation, route }) => {
   };
 
   useLayoutEffect(() => {
-    const unsubscribe = db
-      .collection("chats")
+    const gettingMessages = db
+      .collection("Contchat")
       .doc(route.params.id)
-      .collection("messages")
+      .collection("chatting")
       .orderBy("timestamp", "asc")
       .onSnapshot((snapshot) =>
         setMessage(
@@ -70,35 +64,37 @@ const ChatScreen = ({ navigation, route }) => {
         )
       );
 
-    return unsubscribe;
+    return gettingMessages;
   }, [route]);
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ paddingTop: 15 }}>
-        {messages.map(({ id, data }) => (
-          <View key={id} style={styles.receiver}>
-            <Text>{data.message}</Text>
-          </View>
-        ))}
-      </ScrollView>
       <KeyboardAvoidingView
         behavior={Platform.OS === "android" ? "padding" : "height"}
         style={{ flex: 1 }}
-        keyboardVerticalOffset={90}
+        keyboardVerticalOffset={-210}
       >
-        <View style={styles.footer}>
-          <TextInput
-            placeholder="Chat"
-            style={styles.textInput}
-            value={input}
-            onChangeText={(text) => setInput(text)}
-            onSubmitEditing={sendMessage}
-          />
-          <TouchableOpacity onPress={sendMessage} style={{ bottom: -240 }}>
-            <Ionicons name="send" color="#2b68e6" size={24} />
-          </TouchableOpacity>
-        </View>
+        <>
+          <ScrollView>
+            {messages.map(({ id, data }) => (
+              <View key={id} style={styles.receiver}>
+                <Text>{data.message}</Text>
+              </View>
+            ))}
+          </ScrollView>
+          <View style={styles.footer}>
+            <TextInput
+              placeholder="Chat"
+              style={styles.textInput}
+              value={input}
+              onChangeText={(text) => setInput(text)}
+              onSubmitEditing={sendMessage}
+            />
+            <TouchableOpacity onPress={sendMessage}>
+              <Ionicons name="send" color="#2b68e6" size={24} />
+            </TouchableOpacity>
+          </View>
+        </>
       </KeyboardAvoidingView>
     </View>
   );
@@ -117,7 +113,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   textInput: {
-    bottom: -240,
+    bottom: 0,
     height: 40,
     flex: 1,
     marginRight: 15,

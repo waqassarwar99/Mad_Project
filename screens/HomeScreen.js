@@ -1,9 +1,5 @@
 import * as React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-
-import AddContract from "./AddContract";
-import ViewContract from "./ViewContract";
-import Chat from "./Chat";
 import { Icon } from "react-native-elements";
 
 const HomeScreen = ({ navigation }) => {

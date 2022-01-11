@@ -1,19 +1,14 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button, Input } from "react-native-elements";
+console.disableYellowBox = true;
 import db from "../firebase";
-
 const AddContract = ({ navigation }) => {
   const [contractName, setContractName] = React.useState("");
   const [contractType, setType] = React.useState("");
   const [contractDate, setDate] = React.useState("");
   const [contractAmount, setAmount] = React.useState("");
-
   const postData = () => {
     db.collection("contracts")
       .add({
@@ -25,7 +20,6 @@ const AddContract = ({ navigation }) => {
       .then(() => navigation.goBack())
       .catch((err) => console.log(err));
   };
-
   return (
     <View style={styles.container}>
       <View
@@ -107,7 +101,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    
   },
 });
 

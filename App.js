@@ -1,11 +1,8 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Icon } from "react-native-elements";
-import { db } from "./firebase";
-
 import HomeScreen from "./screens/HomeScreen";
 import AddContract from "./screens/AddContract";
 import ViewContract from "./screens/ViewContract";
@@ -14,17 +11,13 @@ import Chat from "./screens/Chat";
 import AddChat from "./screens/AddChat";
 import ChatScreen from "./screens/ChatScreen";
 import ContractDetail from "./screens/ContractDetail";
-
 const Stack = createStackNavigator();
-
 const globalScreenOptions = {
   headerStyle: { backgroundColor: "#778899" },
   headerTitleStyle: { color: "white" },
   headerTintColor: "white",
   headerTitleAlign: "center",
-
 };
-
 export default function App() {
   return (
     <NavigationContainer>

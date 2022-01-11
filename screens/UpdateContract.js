@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Touchable,
-} from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-elements";
 import db from "../firebase";
